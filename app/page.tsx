@@ -1,65 +1,217 @@
+// components/HeroSection.tsx
+"use client"
+import React from "react";
 import Image from "next/image";
+import Logo from "./components/logo"; // Your logo component
+import CircularText from "./components/circularText";
 
-export default function Home() {
+const chapters = [
+  {
+    title: "chapter 1",
+    content: `Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
+              Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
+              mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. 
+              Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu. 
+              Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet. 
+              Pellentesque commodo lacus at sodales sodales. 
+              Quisque sagittis orci ut diam condimentum, vel euismod erat placerat.`
+  },
+  {
+    title: "chapter 2",
+    content: `Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
+              Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
+              mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. 
+              Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu. 
+              Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet. 
+              Pellentesque commodo lacus at sodales sodales. 
+              Quisque sagittis orci ut diam condimentum, vel euismod erat placerat.`
+  },
+  {
+    title: "chapter 3",
+    content: `Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
+              Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
+              mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. 
+              Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu. 
+              Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet. 
+              Pellentesque commodo lacus at sodales sodales. 
+              Quisque sagittis orci ut diam condimentum, vel euismod erat placerat.`
+  }
+];
+
+export default function HeroSection() {
+  const [currentSlide, setCurrentSlide] = React.useState(0);
+  const [showArrows, setShowArrows] = React.useState(false);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % chapters.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + chapters.length) % chapters.length);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+
+    <div className="min-h-screen p-8 bg-blue-100">
+      {/* Logo */}
+      <Logo />
+
+      <div className="flex flex-row gap-10">
+        <div className="flex bg-blue-100 ">
+          <Image
+            src="/daviddoro.jpg"
+            alt="daviddoroimage"
+            width={538}
+            height={592}
+            className="object-cover h-[538px] w-[592px] rounded-[40px]"
+            priority
+          />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        {/* chapter and */}
+        <div className="flex  flex-col justify-between w-[800px]">
+          <div
+
+            className="items-center flex flex-col"
+            onMouseEnter={() => setShowArrows(true)}
+            onMouseLeave={() => setShowArrows(false)}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            {/* Navigation Arrows (hidden by default, visible on hover) */}
+            <button
+              onClick={prevSlide}
+              className={`
+            absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12
+            w-10 h-10 flex items-center justify-center
+            text-gray-400 hover:text-gray-800 transition-all duration-300
+            ${showArrows ? 'opacity-100' : 'opacity-0'}
+          `}
+              aria-label="Previous chapter"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+
+            <button
+              onClick={nextSlide}
+              className={`
+            absolute right-0 top-1/2 -translate-y-1/2 translate-x-12
+            w-10 h-10 flex items-center justify-center
+            text-gray-400 hover:text-gray-800 transition-all duration-300
+            ${showArrows ? 'opacity-100' : 'opacity-0'}
+          `}
+              aria-label="Next chapter"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+
+            {/* Current Chapter Content */}
+            <div className="transition-opacity duration-500 ease-in-out">
+              <h2
+                className="text-[24px] font-bold mb-2"
+                style={{
+                  fontFamily: 'gyst, san-serif',
+                  fontWeight: 700,
+                  color: '#1E1E1D',
+                  letterSpacing: '0%',
+                  lineHeight: '100%'
+                }}
+              >
+                {chapters[currentSlide].title}
+              </h2>
+
+              <p
+                className="text-lg leading-relaxed text-black"
+              // style={{
+              //   fontFamily: 'Satoshi, sans-serif',
+              //   fontWeight: 400,
+              //   color: '#1E1E1D',
+              //   letterSpacing: '0%',
+              //   lineHeight: '100%'
+              // }}
+              >
+                {chapters[currentSlide].content}
+              </p>
+            </div>
+
+            {/* Chapter Indicators */}
+            <div className="flex space-x-3 h-10 bg-blue-300 mt-4 justify-center"
+              style={{
+                width: '56px',
+                height: '8px',
+                top: '626px',
+                left: '1044px'
+              }}
+            >
+              {chapters.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+
+                  className={`w-[8px] h-[8px] rounded-full transition-all duration-300 ${index === currentSlide
+                    ? 'bg-gray-800'
+                    : 'bg-white hover:bg-gray-400'
+                    }`}
+                  aria-label={`Go to chapter ${index + 2}`}
+                />
+              ))}
+            </div>
+          </div>
+          {/* contacts and circle */}
+          <div className="flex flex-row items-end justify-between ">
+            <div className="w-64 text-sm text-black bg-transparent">
+              <p className="mb-2 text-[24px]">Contact</p>
+
+              <p className="mb-2 text-[24px] text-orange">hello@dorodavid.com</p>
+
+              <p className="mb-2 text-[24px]">+39 345 636 6497</p>
+
+              <p className="mb-2 text-[24px]">Instagram</p>
+              <p className="mb-2 text-[24px]">LinkedIn</p>
+            </div>
+            <div className="flex items-center justify-center">
+              <CircularText
+                text="Set design | industrial design | Brand Identity | Web Design | Photography | Design Direction | UX&UI | Strategy |"
+                onHover="speedUp"
+                spinDuration={20}
+                className="custom-class"
+              />
+              <button
+                className="w-[245px] h-[56px] rounded-[20px] bg-white shadow-xl"
+              >
+                <span
+                  style={{
+                    color: '#1E1E1D'
+                  }}
+
+                  className="text-[24px]"
+                >have a look</span>
+                <Image src="/uparrow.png"
+                  alt="arrow"
+                  width={16}
+                  height={16}
+                  className="inline-block ml-2"
+                ></Image>
+              </button>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </div >
   );
 }
