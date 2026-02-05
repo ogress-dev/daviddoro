@@ -2,7 +2,8 @@ import React from "react";
 
 export default function Logo() {
   return (
-    <div className="flex flex-col" role="banner" aria-label="David Doro Brand & Product Design">
+    <div className="flex items-center gap-6" role="banner" aria-label="David Doro Brand & Product Design">
+      <div className="flex flex-col">
       {/* Main "David Doro®" */}
       <span 
         className="font-satoshi font-bold text-[112px] leading-[124px] tracking-[-0.02em]"
@@ -63,6 +64,10 @@ export default function Logo() {
           Product Design
         </span>
       </div>
+      </div>
+
+      {/* Shaka image placed to the right of the logo text. Put `shaka.png` in `public/shaka.png`. */}
+      <img src="/shaka.png" alt="Shaka" className="w-[153px] h-[240px] object-contain" />
     </div>
   );
 }

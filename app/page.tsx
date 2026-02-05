@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Logo from "./components/logo"; // Your logo component
 import CircularText from "./components/circularText";
+import { style } from "motion/react-client";
 
 const chapters = [
   {
@@ -52,7 +53,20 @@ export default function HeroSection() {
 
   return (
 
-    <div className="min-h-screen p-8 bg-blue-100">
+    <div className="h-screen p-8 bg-blue-100 w-screen"
+      style={{
+        backgroundImage: `
+    linear-gradient(rgba(255, 255, 255, 0.3), rgba(188, 184, 184, 0.3)),
+    url("/bg.png")
+  `,
+        backgroundColor: 'lightgray',
+        backgroundPosition: '50% 50%',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+      }}
+
+
+    >
       {/* Logo */}
       <Logo />
 
@@ -61,9 +75,9 @@ export default function HeroSection() {
           <Image
             src="/daviddoro.jpg"
             alt="daviddoroimage"
-            width={538}
-            height={592}
-            className="object-cover h-[538px] w-[592px] rounded-[40px]"
+            width={1000}
+            height={1000}
+            className="object-cover h-[480px] w-[592px] rounded-[40px]"
             priority
           />
         </div>
