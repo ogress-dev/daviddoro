@@ -25,4 +25,22 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Hero background with responsive positioning for mobile */
+.hero-bg {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.3), rgba(188, 184, 184, 0.3)),
+    url('/bg.png');
+  background-color: lightgray;
+  background-position: 50% 20%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+@media (min-width: 640px) {
+  .hero-bg {
+    background-position: 50% 50%;
+  }
+}
+
 
