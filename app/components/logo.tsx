@@ -1,13 +1,21 @@
-import React from "react";
-import Image from "next/image";
-export default function Logo() {
-  return (
+'use client';
+import Image from 'next/image';
 
-    <>
+interface LogoProps {
+  rotation?: number;
+  isCenter?: boolean;
+}
+
+export default function Logo({ rotation = 0, isCenter = false }: LogoProps) {
+  return (
+    <div className="relative w-full flex justify-center items-center">
       <div className="text-start flex flex-row gap-10">
 
         {/* desktop one */}
-        <div className="hidden sm:flex flex-col">
+        <div 
+          className="hidden sm:flex flex-col"
+          style={{ opacity: isCenter ? 0 : 1, transition: 'opacity 0.7s ease-in-out' }}
+        >
           <h1 className="text-[64px] lg:text-[112px] text-black font-semibold leading-[1] tracking-[-0.02em]">
             David Doro <span className="text-[16px] lg:text-[20px] align-top">®</span>
           </h1>
@@ -27,7 +35,10 @@ export default function Logo() {
 
 
         {/* mobile one */}
-        <div className="sm:hidden flex text-start flex-col items-start">
+        <div 
+          className="sm:hidden flex text-start flex-col items-start"
+          style={{ opacity: isCenter ? 0 : 1, transition: 'opacity 0.7s ease-in-out' }}
+        >
           <h1 className="text-[48px] text-black font-bold leading-none tracking-[-0.02em] pl-15">
             David
             <span className="relative inline-block">
@@ -51,49 +62,15 @@ export default function Logo() {
           width={1000}
           height={1000}
           className="w-[86.545px] h-[136px] sm:w-[153px] sm:h-[240px] object-contain translate-y-[90%] sm:translate-y-[0%] translate-x-[-150%] sm:translate-x-[0%]"
-          style={{ aspectRatio: '7/11' }}
+          style={{ 
+            aspectRatio: '7/11',
+            transform: isCenter 
+              ? `translate(calc(-50vw + 50%), calc(50vh)) rotate(${rotation}deg)`
+              : `rotate(${rotation}deg)`,
+            transition: 'transform 0.7s ease-in-out'
+          }}
         />
       </div>
-    </>
-    // <div className="flex items-center gap-6" role="banner" aria-label="David Doro Brand & Product Design">
-    //   <div className="flex flex-col">
-    //     {/* Main name: mobile lowercase, desktop capitalized with ® */}
-    //     <span className="sm:hidden font-satoshi font-bold text-[48px] leading-[56px] tracking-[-0.02em] lowercase text-center" style={{ fontFamily: 'Satoshi, sans-serif', fontWeight: 700, color: '#1E1E1D' }}>
-    //       daviddoro<span className="text-[28px] align-top">®</span>
-    //     </span>
-
-    //     <span className="hidden sm:inline font-satoshi font-bold text-[112px] leading-[124px] tracking-[-0.02em]" style={{ fontFamily: 'Satoshi, sans-serif', fontWeight: 700, color: '#1E1E1D' }}>
-    //       David Doro<span className="text-[28px] align-top">®</span>
-    //     </span>
-
-    //     {/* Subtitle: mobile stacked, desktop single line */}
-    //     <div className="mt-[-2px]">
-    //       {/* Mobile: "brand & product" on one line, "design" on second line */}
-    //       <div className="sm:hidden ">
-    //         <div className="text-[45px] font-satoshi font-bold leading-[56px] tracking-[-0.02em] lowercase" style={{ fontFamily: 'Satoshi, sans-serif', fontWeight: 700, color: '#1E1E1D' }}>
-    //           brand <span className="inline-block" style={{ fontFamily: 'Gyst, serif', fontWeight: 400 }}>&</span> product
-    //         </div>
-    //         <div className="text-[48px] font-satoshi font-bold leading-[56px] tracking-[-0.02em] lowercase" style={{ fontFamily: 'Satoshi, sans-serif', fontWeight: 700, color: '#1E1E1D' }}>
-    //           design
-    //         </div>
-    //       </div>
-
-    //       {/* Desktop: single line "Brand & Product Design" */}
-    //       <div className="hidden sm:block">
-    //         <span className="text-[112px] font-satoshi font-bold leading-[124px] tracking-[-0.02em]" style={{ fontFamily: 'Satoshi, sans-serif', fontWeight: 700, color: '#1E1E1D' }}>
-    //           Brand <span className="mx-[-0.05em]" style={{ fontFamily: 'Gyst, serif', fontWeight: 400 }}>&</span> Product Design
-    //         </span>
-    //       </div>
-    //     </div>
-    //   </div>
-
-    //   {/* Shaka image placed to the right of the logo text. Put `shaka.png` in `public/shaka.png`. */}
-    //   <img
-    //     src="/shaka.png"
-    //     alt="Shaka"
-    //     className="w-[86.545px] h-[136px] sm:w-[153px] sm:h-[240px] object-contain translate-y-[70%] sm:translate-y-[0%] translate-x-[-80%] sm:translate-x-[0%]"
-    //     style={{ aspectRatio: '7/11' }}
-    //   />
-    // </div>
+    </div>
   );
 }

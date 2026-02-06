@@ -6,6 +6,7 @@ interface CircularTextProps {
   text: string;
   spinDuration?: number;
   className?: string;
+  slideToTop?: boolean;
 }
 
 const getRotationTransition = (duration: number, from: number, loop: boolean = true) => ({
@@ -29,7 +30,8 @@ const getTransition = (duration: number, from: number) => ({
 const CircularText: React.FC<CircularTextProps> = ({
   text,
   spinDuration = 20,
-  className = ''
+  className = '',
+  slideToTop = false
 }) => {
   const letters = Array.from(text);
   const controls = useAnimation();
@@ -50,14 +52,17 @@ const CircularText: React.FC<CircularTextProps> = ({
       style={{
         rotate: rotation,
         position: 'fixed',
-        right: '0.5rem',
-        bottom: '0.5rem',
+        right: slideToTop ? '50%' : '0.5rem',
+        bottom: slideToTop ? 'auto' : '0.5rem',
+        top: slideToTop ? '2rem' : 'auto',
         width: 470,
         height: 470,
         zIndex: 1,
         pointerEvents: 'auto',
-        translateX: '20%',
-        translateY: '30%'
+        translateX: slideToTop ? '50%' : '20%',
+        translateY: slideToTop ? '0%' : '30%',
+        overflow: 'hidden',
+        transition: 'all 0.7s ease-in-out'
       }}
       initial={{ rotate: 0 }}
       animate={controls}

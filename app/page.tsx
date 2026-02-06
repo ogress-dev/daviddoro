@@ -40,6 +40,18 @@ const chapters = [
 ];
 
 export default function Home() {
+  const [rotation, setRotation] = useState(0);
+  const [isTop, setIsTop] = useState(false);
+  const [isCenter, setIsCenter] = useState(false);
+
+  const handleRotate = () => {
+    setRotation((prev) => prev + 90);
+    setIsCenter(true);
+  };
+
+  const handleSlideToTop = () => {
+    setIsTop((prev) => !prev);
+  };
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -47,10 +59,15 @@ export default function Home() {
   const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + chapters.length) % chapters.length);
 
   return (
-    <div className="min-h-screen w-screen bg-blue-100 overflow-x-hidden p-5 hero-bg flex flex-col items-center justify-center">
-      <Logo />
-
-      <div className="flex flex-col sm:flex-row gap-10 items-center mt-4">
+    <div className="min-h-screen w-screen bg-blue-100 overflow-hidden p-5 hero-bg flex flex-col items-center justify-center">
+      
+    <Logo rotation={rotation} isCenter={isCenter} />
+      <div
+        className={`flex flex-col sm:flex-row gap-10 items-center mt-4 transition-opacity duration-700 ${
+          isCenter ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+      >
+        
         <div className="flex flex-col items-center">
           <Image
             src="/daviddoro.jpg"
@@ -76,7 +93,10 @@ export default function Home() {
               <Link href="/contact" className=" z-2 w-[140px] h-[48px] rounded-[16px] bg-black shadow-sm flex items-center justify-center">
                 <span className="text-[24px] font-bold italic" style={{ color: '#ffffff' }}>Contacts</span>
               </Link>
-              <button className="z-2 w-[180px] h-[48px] rounded-[16px] bg-white shadow flex items-center justify-center">
+              <button
+                onClick={handleRotate}
+                className="z-2 w-[180px] h-[48px] rounded-[16px] bg-white shadow flex items-center justify-center"
+              >
                 <span className="text-[24px] font-bold italic" style={{ color: '#1E1E1D' }}>have a look</span>
               </button>
             </div>
@@ -118,7 +138,7 @@ export default function Home() {
 
             <div className="flex items-center justify-center gap-4">
               <CircularText text="Set design | industrial design | Brand Identity | Web Design | Photography | Design Direction | UX&UI | Strategy |"  spinDuration={20} className="custom-class" />
-              <button className="z-2 w-[245px] h-[56px] rounded-[20px] bg-white shadow-xl flex items-center justify-center">
+              <button onClick={handleRotate} className="z-2 w-[245px] h-[56px] rounded-[20px] bg-white shadow-xl flex items-center justify-center">
                 <span style={{ color: '#1E1E1D' }} className="text-[24px]">have a look</span>
               </button>
             </div>
