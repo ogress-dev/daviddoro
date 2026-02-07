@@ -8,7 +8,7 @@ interface LogoProps {
 
 export default function Logo({ rotation = 0, isCenter = false }: LogoProps) {
   return (
-    <div className="relative w-full flex justify-center items-center">
+    <div className="relative w-full p-5 flex justify-center items-center">
       <div className="text-start flex flex-row gap-10">
 
         {/* desktop one */}

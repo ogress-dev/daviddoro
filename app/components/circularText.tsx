@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, useAnimation, useMotionValue, MotionValue, Transition } from 'motion/react';
 
 import './CircularText.css';
@@ -36,36 +36,42 @@ const CircularText: React.FC<CircularTextProps> = ({
   const letters = Array.from(text);
   const controls = useAnimation();
   const rotation: MotionValue<number> = useMotionValue(0);
+  const previousSlideToTopRef = useRef(slideToTop);
 
   useEffect(() => {
-    const start = rotation.get();
-    controls.start({
-      rotate: start + 360,
-      scale: 1,
-      transition: getTransition(spinDuration, start)
-    });
-  }, [spinDuration, text, controls]);
+    if (slideToTop && !previousSlideToTopRef.current) {
+      const start = rotation.get();
+      controls.start({
+        rotate: start + 360,
+        transition: getTransition(spinDuration, start)
+      });
+    } else if (!slideToTop && previousSlideToTopRef.current) {
+      controls.stop();
+    }
+    previousSlideToTopRef.current = slideToTop;
+  }, [slideToTop, spinDuration, controls, rotation]);
 
   return (
     <motion.div
       className={`circular-text ${className}`}
+      animate={{
+        left: slideToTop ? '50%' : 'auto',
+        right: slideToTop ? 'auto' : '0.5rem',
+        bottom: slideToTop ? 'auto' : '0.5rem',
+        top: slideToTop ? '2rem' : 'auto',
+        width: slideToTop ? 380 : 470,
+        height: slideToTop ? 380 : 470,
+        x: slideToTop ? '-50%' : '20%',
+        y: slideToTop ? '0%' : '30%',
+      }}
+      transition={{ duration: 0.7, ease: 'easeInOut' }}
       style={{
         rotate: rotation,
         position: 'fixed',
-        right: slideToTop ? '50%' : '0.5rem',
-        bottom: slideToTop ? 'auto' : '0.5rem',
-        top: slideToTop ? '2rem' : 'auto',
-        width: 470,
-        height: 470,
         zIndex: 1,
         pointerEvents: 'auto',
-        translateX: slideToTop ? '50%' : '20%',
-        translateY: slideToTop ? '0%' : '30%',
         overflow: 'hidden',
-        transition: 'all 0.7s ease-in-out'
       }}
-      initial={{ rotate: 0 }}
-      animate={controls}
     >
       {letters.map((letter, i) => {
         const rotationDeg = (360 / letters.length) * i;

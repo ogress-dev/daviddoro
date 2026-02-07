@@ -12,28 +12,22 @@ const chapters = [
     content: `Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
               Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
               mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. 
-              Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu. 
-              Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet. 
-              Pellentesque commodo lacus at sodales sodales. 
-              Quisque sagittis orci ut diam condimentum, vel euismod erat placerat.`
+              Nullam quis imperdiet augue. 
+              `
   },
   {
     title: "chapter 2",
     content: `Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
               Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
               mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. 
-              Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu. 
-              Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet. 
-              Pellentesque commodo lacus at sodales sodales. 
+              Nullam quis imperdiet augue. Vestibulum auctor ornare 
               Quisque sagittis orci ut diam condimentum, vel euismod erat placerat.`
   },
   {
     title: "chapter 3",
     content: `Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa mi.
               Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla,
-              mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. 
-              Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu. 
-              Curabitur pellentesque nibh nibh, at maximus ante fermentum sit amet. 
+              mattis ligula consectetur,  fermentum sit amet. 
               Pellentesque commodo lacus at sodales sodales. 
               Quisque sagittis orci ut diam condimentum, vel euismod erat placerat.`
   }
@@ -43,6 +37,7 @@ export default function Home() {
   const [rotation, setRotation] = useState(0);
   const [isTop, setIsTop] = useState(false);
   const [isCenter, setIsCenter] = useState(false);
+  const [testerMode, setTesterMode] = useState(false);
 
   const handleRotate = () => {
     setRotation((prev) => prev + 90);
@@ -52,6 +47,10 @@ export default function Home() {
   const handleSlideToTop = () => {
     setIsTop((prev) => !prev);
   };
+
+  const handleTesterClick = () => {
+    setTesterMode((prev) => !prev);
+  };
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -59,12 +58,15 @@ export default function Home() {
   const prevSlide = () => setCurrentIndex((prev) => (prev - 1 + chapters.length) % chapters.length);
 
   return (
-    <div className="min-h-screen w-screen bg-blue-100 overflow-hidden p-5 hero-bg flex flex-col items-center justify-center">
+    <div className={`min-h-screen w-screen overflow-hidden p-5 flex flex-col items-center justify-center transition-colors duration-700 ${
+      testerMode ? 'bg-black' : 'bg-blue-100 hero-bg'
+    }`}>
       
     <Logo rotation={rotation} isCenter={isCenter} />
+    <CircularText text="Set design | industrial design | Brand Identity | Web Design | Photography | Design Direction | UX&UI | Strategy |"  spinDuration={20} className="custom-class" slideToTop={testerMode} />
       <div
         className={`flex flex-col sm:flex-row gap-10 items-center mt-4 transition-opacity duration-700 ${
-          isCenter ? "opacity-0 pointer-events-none" : "opacity-100"
+          isCenter || testerMode ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
         
@@ -87,12 +89,16 @@ export default function Home() {
               read me
             </Link>
 
-            <CircularText text="Set design | industrial design | Brand Identity | Web Design | Photography | Design Direction | UX&UI | Strategy |"  spinDuration={20} className="custom-class" />
-
             <div className="flex gap-3 mt-12">
-              <Link href="/contact" className=" z-2 w-[140px] h-[48px] rounded-[16px] bg-black shadow-sm flex items-center justify-center">
+              {/* <Link href="/contact" className=" z-2 w-[140px] h-[48px] rounded-[16px] bg-black shadow-sm flex items-center justify-center">
                 <span className="text-[24px] font-bold italic" style={{ color: '#ffffff' }}>Contacts</span>
-              </Link>
+              </Link> */}
+              <button
+                onClick={handleTesterClick}
+                className="z-2 w-[140px] h-[48px] rounded-[16px] bg-black shadow-sm flex items-center justify-center"
+              >
+                <span className="text-[24px] font-bold italic" style={{ color: '#ffffff' }}>Tester</span>
+              </button>
               <button
                 onClick={handleRotate}
                 className="z-2 w-[180px] h-[48px] rounded-[16px] bg-white shadow flex items-center justify-center"
@@ -137,7 +143,6 @@ export default function Home() {
             </div>
 
             <div className="flex items-center justify-center gap-4">
-              <CircularText text="Set design | industrial design | Brand Identity | Web Design | Photography | Design Direction | UX&UI | Strategy |"  spinDuration={20} className="custom-class" />
               <button onClick={handleRotate} className="z-2 w-[245px] h-[56px] rounded-[20px] bg-white shadow-xl flex items-center justify-center">
                 <span style={{ color: '#1E1E1D' }} className="text-[24px]">have a look</span>
               </button>
@@ -145,6 +150,20 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <div className={`fixed bottom-40 z-40 text-sm text-white bg-transparent transition-opacity duration-700 ${testerMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+        <p className="text-[32px]">Contact</p>
+        <p className="text-[32px] text-orange">hello@dorodavid.com</p>
+        <p className="text-[32px] whitespace-nowrap">+39 345 636 6497</p>
+        <p className="text-[32px]">Instagram</p>
+        <p className="text-[32px]">LinkedIn</p>
+      </div>
+      <button
+        onClick={handleTesterClick}
+        className={`fixed bottom-20 left-1/2 -translate-x-1/2 z-50 w-80 h-[48px] rounded-[16px] bg-transparent flex items-center justify-center border border-white transition-opacity duration-700 ${testerMode ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      >
+        <span className="text-[24px] font-bold italic" style={{ color: '#ffffff' }}>Back</span>
+      </button>
     </div>
 
 
