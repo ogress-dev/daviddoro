@@ -218,8 +218,7 @@ export default function Page() {
                 </span>
               </h1>
             </span>
-
-            <div className="flex flex-col items-end gap-2 ml-auto sm:ml-6 shrink-0">
+          <div className="flex flex-col items-end gap-2 ml-auto sm:ml-6 shrink-0">
               {/* <Link
                 href="/projects"
                 className="text-sm font-medium hover:text-orange-500 transition-colors"
