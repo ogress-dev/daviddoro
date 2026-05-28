@@ -367,7 +367,7 @@ export default function Page() {
                     +39 345 636 6497
                   </Link>
                   <Link
-                    href="/https://www.linkedin.com/in/david-doro-design-industriale/"
+                    href="https://www.linkedin.com/in/david-doro-design-industriale/"
                     className="sm:leading-5 md:leading-5 xl:leading-7 hover:text-orange-500 w-fit"
                     style={{ fontSize: 'clamp(14px, 1.5vw, 18px)' }}>
                     LinkedIn
